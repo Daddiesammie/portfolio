@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment Successful{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 max-w-2xl">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        <div class="p-6">
+            <h1 class="text-3xl font-bold mb-6 text-green-600">Payment Successful</h1>
+            <p class="mb-4">Thank you for your payment. Your transaction was successful.</p>
+            <ul class="list-disc list-inside mb-6">
+                <li>Reference: {{ payment.reference }}</li>
+                <li>Amount: NGN {{ payment.amount }}</li>
+                <li>Project: {{ payment.project.title }}</li>
+                <li>Date: {{ payment.created_at|date:"F d, Y H:i" }}</li>
+            </ul>
+            <div class="flex justify-between">
+                <a href="{% url 'project_detail' payment.project.id %}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Go to Project
+                </a>
+                <a href="{% url 'payments:payment_history' %}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

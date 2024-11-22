@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - Portfolio{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6">Profile</h2>
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <p class="text-gray-700 text-sm font-bold mb-2">Username:</p>
+            <p class="text-gray-700">{{ user.username }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-gray-700 text-sm font-bold mb-2">Email:</p>
+            <p class="text-gray-700">{{ user.email }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-gray-700 text-sm font-bold mb-2">Bio:</p>
+            <p class="text-gray-700">{{ user.profile.bio|default:"No bio provided" }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-gray-700 text-sm font-bold mb-2">Location:</p>
+            <p class="text-gray-700">{{ user.profile.location|default:"Not specified" }}</p>
+        </div>
+        <div class="mb-4">
+            <p class="text-gray-700 text-sm font-bold mb-2">Birth Date:</p>
+            <p class="text-gray-700">{{ user.profile.birth_date|date:"F d, Y"|default:"Not specified" }}</p>
+        </div>
+        <div class="flex items-center justify-between">
+            <a href="{% url 'edit_profile' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Edit Profile
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

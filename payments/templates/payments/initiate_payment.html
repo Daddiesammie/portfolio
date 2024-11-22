@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Pay for {{ project.title }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 max-w-2xl">
+    <h1 class="text-3xl font-bold mb-6">Pay for {{ project.title }}</h1>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        <div class="p-6">
+            <form method="post" id="paymentForm">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+                <div class="mb-4">
+                    <label for="{{ form.amount.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Amount (NGN)
+                    </label>
+                    {{ form.amount }}
+                    {% if form.amount.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.amount.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="flex items-center justify-end">
+                    <button type="submit" id="payButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Pay Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const paymentForm = document.getElementById('paymentForm');
+    const payButton = document.getElementById('payButton');
+    
+    paymentForm.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        payButton.disabled = true;
+        payButton.textContent = 'Processing...';
+        
+        try {
+            const formData = new FormData(paymentForm);
+            const response = await fetch(window.location.href, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.error || 'Payment initialization failed');
+            }
+            
+            const handler = PaystackPop.setup({
+                key: '{{ paystack_public_key }}',
+                email: '{{ request.user.email }}',
+                amount: data.amount_kobo,
+                currency: 'NGN',
+                ref: data.reference,
+                callback: function(response) {
+                    window.location.href = "{% url 'payments:verify_payment' %}?reference=" + response.reference;
+                },
+                onClose: function() {
+                    payButton.disabled = false;
+                    payButton.textContent = 'Pay Now';
+                }
+            });
+            
+            handler.openIframe();
+            
+        } catch (error) {
+            alert(error.message || 'An error occurred. Please try again.');
+            payButton.disabled = false;
+            payButton.textContent = 'Pay Now';
+        }
+    });
+});
+</script>
+{% endblock %}
