@@ -3,18 +3,47 @@ from django.contrib.auth.decorators import login_required
 from .models import Project
 from taggit.models import Tag
 from payments.models import Payment
+import random
 
 def home(request):
+    # Get all projects for the main projects section
     projects = Project.objects.all().order_by('-created_at')[:3]
-    return render(request, 'projects/home.html', {'projects': projects})
+    
+    # Get 2 random projects for the hero section
+    all_projects = list(Project.objects.all())
+    random_projects = random.sample(all_projects, min(2, len(all_projects)))
+    
+    context = {
+        'projects': projects,
+        'random_projects': random_projects
+    }
+    
+    return render(request, 'projects/home.html', context)
+
 
 def project_list(request):
-    projects = Project.objects.all().order_by('-created_at')
+    # Get all projects with tags preloaded
+    
+    projects = Project.objects.prefetch_related('tags').all()
+    
+    # Get all tags
     tags = Tag.objects.all()
+    
+    # Get selected tag
     selected_tag = request.GET.get('tag')
+    
+    # Filter projects by tag if selected
     if selected_tag:
-        projects = projects.filter(tags__name=selected_tag)
-    return render(request, 'projects/project_list.html', {'projects': projects, 'tags': tags, 'selected_tag': selected_tag})
+        projects = projects.filter(tags__name__in=[selected_tag]).distinct()
+    
+    context = {
+        'projects': projects,
+        'tags': tags,
+        'selected_tag': selected_tag
+    }
+    
+    return render(request, 'projects/project_list.html', context)
+
 
 @login_required
 def project_detail(request, project_id):

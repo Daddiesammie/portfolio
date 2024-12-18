@@ -16,8 +16,14 @@ class Project(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = TaggableManager()
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return self.title
+
+    def get_tags(self):
+        return self.tags.all()
 
 class ProjectImage(models.Model):
     project = models.ForeignKey(Project, related_name='images', on_delete=models.CASCADE)

@@ -9,9 +9,9 @@ class PaymentAdmin(admin.ModelAdmin):
     readonly_fields = ('reference', 'created_at', 'updated_at')
     
     def has_delete_permission(self, request, obj=None):
-        return False
+        return True  # Enable deletion for all payments
     
     def has_change_permission(self, request, obj=None):
         if obj and obj.status == 'success':
-            return False
+            return True  # Enable editing even for successful payments
         return True

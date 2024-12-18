@@ -1,46 +1,131 @@
 {% extends 'base.html' %}
-
 {% block title %}Edit Profile - Portfolio{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto">
-    <h2 class="text-2xl font-bold mb-6">Edit Profile</h2>
-    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        {% csrf_token %}
-        {% for field in u_form %}
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                </label>
-                {{ field }}
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        <p class="text-red-500 text-xs italic">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
+<div class="relative min-h-screen py-24">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-light opacity-10"></div>
+    
+    <div class="max-w-2xl mx-auto px-4">
+        <!-- Edit Profile Card -->
+        <div class="modern-card p-8 md:p-12">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-display font-bold gradient-text mb-4">Edit Profile</h1>
+                <p class="text-gray-600 dark:text-gray-400">Update your personal information</p>
             </div>
-        {% endfor %}
-        {% for field in p_form %}
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                </label>
-                {{ field }}
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        <p class="text-red-500 text-xs italic">{{ error }}</p>
+
+            <!-- Edit Form -->
+            <form method="POST" class="space-y-8">
+                {% csrf_token %}
+                
+                <!-- User Form Section -->
+                <div class="space-y-6">
+                    <h2 class="text-xl font-display font-bold gradient-text">Account Information</h2>
+                    {% for field in u_form %}
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" 
+                               for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+                        
+                        <div class="relative">
+                            <input type="{{ field.field.widget.input_type }}" 
+                                   name="{{ field.html_name }}"
+                                   id="{{ field.id_for_label }}"
+                                   value="{{ field.value|default:'' }}"
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300"
+                                   {% if field.field.required %}required{% endif %}
+                            >
+                            
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <p class="mt-1 text-red-500 text-sm">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
                     {% endfor %}
-                {% endif %}
-            </div>
-        {% endfor %}
-        <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Update Profile
-            </button>
-            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{% url 'profile' %}">
-                Cancel
-            </a>
+                </div>
+
+                <!-- Profile Form Section -->
+                <div class="space-y-6">
+                    <h2 class="text-xl font-display font-bold gradient-text">Personal Information</h2>
+                    {% for field in p_form %}
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" 
+                               for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+                        
+                        <div class="relative">
+                            {% if field.field.widget.input_type == "textarea" %}
+                                <textarea name="{{ field.html_name }}"
+                                          id="{{ field.id_for_label }}"
+                                          class="w-full px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300"
+                                          rows="4"
+                                          {% if field.field.required %}required{% endif %}
+                                >{{ field.value|default:'' }}</textarea>
+                            {% else %}
+                                <input type="{{ field.field.widget.input_type }}" 
+                                       name="{{ field.html_name }}"
+                                       id="{{ field.id_for_label }}"
+                                       value="{{ field.value|default:'' }}"
+                                       class="w-full px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300"
+                                       {% if field.field.required %}required{% endif %}
+                                >
+                            {% endif %}
+                            
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <p class="mt-1 text-red-500 text-sm">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex items-center justify-between pt-8">
+                    <button type="submit" 
+                            class="px-8 py-4 rounded-full bg-gradient-to-r from-primary-500 to-accent-light text-white font-medium group hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                        <span class="flex items-center">
+                            Save Changes
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </span>
+                    </button>
+                    
+                    <a href="{% url 'profile' %}" 
+                       class="gradient-text font-medium hover:opacity-80 transition-opacity">
+                        Cancel
+                    </a>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
+
+<style>
+.modern-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dark .modern-card {
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-500), var(--accent-light));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+</style>
 {% endblock %}

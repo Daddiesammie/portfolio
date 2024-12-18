@@ -1,36 +1,124 @@
 {% extends 'base.html' %}
-
 {% block title %}Profile - Portfolio{% endblock %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto">
-    <h2 class="text-2xl font-bold mb-6">Profile</h2>
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div class="mb-4">
-            <p class="text-gray-700 text-sm font-bold mb-2">Username:</p>
-            <p class="text-gray-700">{{ user.username }}</p>
-        </div>
-        <div class="mb-4">
-            <p class="text-gray-700 text-sm font-bold mb-2">Email:</p>
-            <p class="text-gray-700">{{ user.email }}</p>
-        </div>
-        <div class="mb-4">
-            <p class="text-gray-700 text-sm font-bold mb-2">Bio:</p>
-            <p class="text-gray-700">{{ user.profile.bio|default:"No bio provided" }}</p>
-        </div>
-        <div class="mb-4">
-            <p class="text-gray-700 text-sm font-bold mb-2">Location:</p>
-            <p class="text-gray-700">{{ user.profile.location|default:"Not specified" }}</p>
-        </div>
-        <div class="mb-4">
-            <p class="text-gray-700 text-sm font-bold mb-2">Birth Date:</p>
-            <p class="text-gray-700">{{ user.profile.birth_date|date:"F d, Y"|default:"Not specified" }}</p>
-        </div>
-        <div class="flex items-center justify-between">
-            <a href="{% url 'edit_profile' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Edit Profile
-            </a>
+<div class="relative min-h-screen py-24">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-light opacity-10"></div>
+    
+    <div class="max-w-4xl mx-auto px-4">
+        <!-- Profile Card -->
+        <div class="modern-card p-8 md:p-12">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-1">
+                    <div class="w-full h-full rounded-full bg-white dark:bg-gray-800 flex items-center justify-center">
+                        <span class="text-4xl font-display font-bold gradient-text">
+                            {{ user.username|make_list|first|upper }}
+                        </span>
+                    </div>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-display font-bold gradient-text mb-4">{{ user.username }}</h1>
+                <p class="text-gray-600 dark:text-gray-400">{{ user.email }}</p>
+            </div>
+
+            <!-- Profile Information -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Bio Section -->
+                <div class="modern-card p-6 hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-2">
+                            <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="ml-4 text-xl font-display font-bold">Bio</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400">{{ user.profile.bio|default:"No bio provided" }}</p>
+                </div>
+
+                <!-- Location Section -->
+                <div class="modern-card p-6 hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-2">
+                            <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="ml-4 text-xl font-display font-bold">Location</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400">{{ user.profile.location|default:"Not specified" }}</p>
+                </div>
+
+                <!-- Birth Date Section -->
+                <div class="modern-card p-6 hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-2">
+                            <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="ml-4 text-xl font-display font-bold">Birth Date</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400">{{ user.profile.birth_date|date:"F d, Y"|default:"Not specified" }}</p>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="modern-card p-6 hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-2">
+                            <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="ml-4 text-xl font-display font-bold">Activity</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div>
+                            <p class="text-2xl font-bold gradient-text">12</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Projects</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold gradient-text">1.2k</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Followers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="mt-12 flex justify-center">
+                <a href="{% url 'edit_profile' %}" 
+                   class="inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-primary-500 to-accent-light text-white font-medium group hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                    Edit Profile
+                    <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                    </svg>
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+.modern-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dark .modern-card {
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-500), var(--accent-light));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+</style>
 {% endblock %}

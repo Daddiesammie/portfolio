@@ -2,35 +2,114 @@
 {% block title %}Pay for {{ project.title }}{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 max-w-2xl">
-    <h1 class="text-3xl font-bold mb-6">Pay for {{ project.title }}</h1>
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-        <div class="p-6">
-            <form method="post" id="paymentForm">
+<div class="relative min-h-screen py-16">
+    <!-- Background gradient -->
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-gray-900 dark:to-gray-800 opacity-40"></div>
+    
+    <div class="container mx-auto px-4 max-w-2xl relative">
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-display font-bold gradient-text mb-4">Complete Your Purchase</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400">{{ project.title }}</p>
+        </div>
+
+        <!-- Payment Card -->
+        <div class="modern-card p-8">
+            <div class="flex items-center justify-between mb-8 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Payment Details</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Secure payment via Paystack</p>
+                </div>
+                <div class="text-accent-light">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <form method="post" id="paymentForm" class="space-y-6">
                 {% csrf_token %}
+                
                 {% if form.non_field_errors %}
-                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
-                    {{ form.non_field_errors }}
+                <div class="p-4 bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 rounded-xl">
+                    <div class="flex">
+                        <svg class="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-red-800 dark:text-red-200">{{ form.non_field_errors }}</h3>
+                        </div>
+                    </div>
                 </div>
                 {% endif %}
-                <div class="mb-4">
-                    <label for="{{ form.amount.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+
+                <div class="space-y-2">
+                    <label for="{{ form.amount.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Amount (NGN)
                     </label>
                     {{ form.amount }}
                     {% if form.amount.errors %}
-                    <p class="mt-1 text-sm text-red-600">{{ form.amount.errors.0 }}</p>
+                    <p class="text-sm text-red-600 dark:text-red-400">{{ form.amount.errors.0 }}</p>
                     {% endif %}
                 </div>
-                <div class="flex items-center justify-end">
-                    <button type="submit" id="payButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Pay Now
+
+                <div class="pt-6">
+                    <button type="submit" id="payButton" class="w-full bg-gradient-to-r from-primary-500 to-accent-light text-white font-medium py-3 px-6 rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                        <span class="flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            Pay Now
+                        </span>
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<style>
+    #id_amount {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgb(209, 213, 219);
+    background-color: white;
+    color: rgb(17, 24, 39);
+    transition: all 200ms;
+}
+
+.dark #id_amount {
+    background-color: rgb(31, 41, 55);
+    border-color: rgb(55, 65, 81);
+    color: white;
+}
+
+#id_amount:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: rgb(59, 130, 246);
+    border-color: transparent;
+}
+.modern-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .modern-card {
+    background: rgba(17, 24, 39, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-500), var(--accent-light));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+</style>
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
@@ -40,8 +119,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     paymentForm.addEventListener("submit", async function(e) {
         e.preventDefault();
+        
+        // Update button state with loading spinner
         payButton.disabled = true;
-        payButton.textContent = 'Processing...';
+        payButton.innerHTML = `
+            <span class="flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+            </span>`;
         
         try {
             const formData = new FormData(paymentForm);
@@ -67,22 +155,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 currency: 'NGN',
                 ref: data.reference,
                 callback: function(response) {
-                    window.location.href = "{% url 'payments:verify_payment' %}?reference=" + response.reference;
+                    // Show success indicator before redirect
+                    payButton.innerHTML = `
+                        <span class="flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Payment Successful!
+                        </span>`;
+                    
+                    setTimeout(() => {
+                        window.location.href = "{% url 'payments:verify_payment' %}?reference=" + response.reference;
+                    }, 1000);
                 },
                 onClose: function() {
+                    // Reset button state
                     payButton.disabled = false;
-                    payButton.textContent = 'Pay Now';
+                    payButton.innerHTML = `
+                        <span class="flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            Pay Now
+                        </span>`;
                 }
             });
             
             handler.openIframe();
             
         } catch (error) {
-            alert(error.message || 'An error occurred. Please try again.');
+            // Show error in a more user-friendly way
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'p-4 mb-4 bg-red-50 border-l-4 border-red-400 text-red-700';
+            errorMessage.textContent = error.message || 'An error occurred. Please try again.';
+            paymentForm.insertBefore(errorMessage, paymentForm.firstChild);
+            
+            // Reset button state
             payButton.disabled = false;
-            payButton.textContent = 'Pay Now';
+            payButton.innerHTML = `
+                <span class="flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                    Pay Now
+                </span>`;
         }
     });
 });
 </script>
+
 {% endblock %}
