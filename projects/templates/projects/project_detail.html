@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
+
 {% block title %}{{ project.title }} - Portfolio{% endblock %}
 
 {% block content %}
 <div class="relative min-h-screen">
     <!-- Background Elements -->
-    <div class="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-light opacity-10"></div>
+    <div class="absolute inset-0">
+        <div class="absolute h-[40rem] w-[40rem] -top-40 -left-40 bg-gold-light/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+        <div class="absolute h-[30rem] w-[30rem] top-40 right-20 bg-gold-dark/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
+    </div>
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <!-- Project Header -->
         <header class="text-center mb-16">
-            <h1 class="text-5xl md:text-6xl font-display font-bold gradient-text mb-6">{{ project.title }}</h1>
+            <h1 class="text-5xl md:text-6xl font-display font-bold gold-text mb-6">{{ project.title }}</h1>
             
             <div class="flex flex-wrap justify-center gap-3 mb-8">
                 {% for tag in project.tags.all %}
-                <span class="px-6 py-2 rounded-full text-sm font-medium bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300">
+                <span class="px-6 py-2 rounded-full text-sm font-medium bg-gold-light/10 text-gold-light">
                     {{ tag.name }}
                 </span>
                 {% endfor %}
@@ -26,7 +30,7 @@
             <div class="lg:col-span-2 space-y-16">
                 <!-- Featured Image -->
                 {% if project.image %}
-                <div class="modern-card p-3 group hover:shadow-2xl transition-all duration-500">
+                <div class="glass-effect p-3 group hover:shadow-2xl hover:shadow-gold-light/20 transition-all duration-500">
                     <div class="rounded-xl overflow-hidden">
                         <img src="{{ project.image.url }}" 
                              alt="{{ project.title }}" 
@@ -36,9 +40,9 @@
                 {% endif %}
 
                 <!-- Description -->
-                <div class="modern-card p-8">
-                    <h2 class="text-3xl font-display font-bold mb-6 gradient-text">About the Project</h2>
-                    <div class="prose max-w-none dark:prose-invert">
+                <div class="glass-effect p-8">
+                    <h2 class="text-3xl font-display font-bold gold-text mb-6">About the Project</h2>
+                    <div class="prose max-w-none text-gold-light/80">
                         {{ project.description|safe }}
                     </div>
                 </div>
@@ -46,10 +50,10 @@
                 <!-- Additional Images -->
                 {% if project.images.all %}
                 <div class="space-y-8">
-                    <h2 class="text-3xl font-display font-bold gradient-text">Project Gallery</h2>
+                    <h2 class="text-3xl font-display font-bold gold-text">Project Gallery</h2>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
                         {% for image in project.images.all %}
-                        <div class="modern-card p-3 group hover:shadow-2xl transition-all duration-500">
+                        <div class="glass-effect p-3 group hover:shadow-2xl hover:shadow-gold-light/20 transition-all duration-500">
                             <div class="rounded-lg overflow-hidden">
                                 <img src="{{ image.image.url }}" 
                                      alt="Project image {{ forloop.counter }}"
@@ -64,31 +68,31 @@
 
             <!-- Sidebar -->
             <div class="lg:col-span-1">
-                <div class="modern-card p-8 sticky top-8">
-                    <h2 class="text-2xl font-display font-bold mb-6 gradient-text">Project Details</h2>
+                <div class="glass-effect p-8 sticky top-8">
+                    <h2 class="text-2xl font-display font-bold gold-text mb-6">Project Details</h2>
                     
                     <div class="space-y-4 mb-8">
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-2">
-                                <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-10 h-10 rounded-full bg-gold-light p-2">
+                                <svg class="w-full h-full text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Author</p>
-                                <p class="font-medium text-gray-900 dark:text-white">{{ project.author.username }}</p>
+                                <p class="text-sm text-gold-light/60">Author</p>
+                                <p class="font-medium text-gold-light">{{ project.author.username }}</p>
                             </div>
                         </div>
 
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-2">
-                                <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-10 h-10 rounded-full bg-gold-light p-2">
+                                <svg class="w-full h-full text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Created</p>
-                                <p class="font-medium text-gray-900 dark:text-white">{{ project.created_at|date:"F d, Y" }}</p>
+                                <p class="text-sm text-gold-light/60">Created</p>
+                                <p class="font-medium text-gold-light">{{ project.created_at|date:"F d, Y" }}</p>
                             </div>
                         </div>
                     </div>
@@ -99,7 +103,7 @@
                             {% if project.is_paid %}
                                 {% if user_has_paid %}
                                     <a href="{{ project.file.url }}" 
-                                       class="block w-full text-center px-6 py-4 rounded-full bg-gradient-to-r from-primary-500 to-accent-light text-white font-medium group hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                                       class="block w-full text-center px-6 py-4 rounded-full bg-gold-light text-black font-medium group hover:shadow-xl hover:shadow-gold-light/20 transform hover:scale-105 transition-all duration-300">
                                         <span class="flex items-center justify-center">
                                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
@@ -109,7 +113,7 @@
                                     </a>
                                 {% elif project.author != user %}
                                     <a href="{% url 'payments:initiate_payment' project.id %}"
-                                       class="block w-full text-center px-6 py-4 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-medium group hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                                       class="block w-full text-center px-6 py-4 rounded-full bg-gold-light text-black font-medium group hover:shadow-xl hover:shadow-gold-light/20 transform hover:scale-105 transition-all duration-300">
                                         <span class="flex items-center justify-center">
                                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -120,7 +124,7 @@
                                 {% endif %}
                             {% else %}
                                 <a href="{{ project.file.url }}" 
-                                   class="block w-full text-center px-6 py-4 rounded-full bg-gradient-to-r from-primary-500 to-accent-light text-white font-medium group hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                                   class="block w-full text-center px-6 py-4 rounded-full bg-gold-light text-black font-medium group hover:shadow-xl hover:shadow-gold-light/20 transform hover:scale-105 transition-all duration-300">
                                     <span class="flex items-center justify-center">
                                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
@@ -138,23 +142,26 @@
 </div>
 
 <style>
-.modern-card {
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 24px;
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
+    .glass-effect {
+        background: rgba(0, 0, 0, 0.8);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        transition: all 0.3s ease;
+    }
 
-.dark .modern-card {
-    background: rgba(17, 24, 39, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
+    .gold-text {
+        background: linear-gradient(135deg, #ffd700, #b8860b);
+        -webkit-background-clip: text;
+        color: transparent;
+        background-size: 200% auto;
+        animation: shine 3s linear infinite;
+    }
 
-.gradient-text {
-    background: linear-gradient(135deg, var(--primary-500), var(--accent-light));
-    -webkit-background-clip: text;
-    color: transparent;
-}
+    @keyframes shine {
+        to {
+            background-position: 200% center;
+        }
+    }
 </style>
 {% endblock %}

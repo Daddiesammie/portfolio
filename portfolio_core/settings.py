@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'accounts',
     'payments',
     'resume',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -117,5 +118,17 @@ LOGGING = {
     'root': {
         'handlers': ['console'],
         'level': 'INFO',
+    },
+}
+
+
+ASGI_APPLICATION = 'portfolio_core.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
     },
 }

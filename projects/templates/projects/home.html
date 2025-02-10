@@ -4,14 +4,12 @@
 {% block title %}Home - Portfolio{% endblock %}
 
 {% block content %}
-<!-- Modern Hero Section -->
+<!-- Hero Section -->
 <div class="relative min-h-[90vh] flex items-center">
     <!-- Animated Background -->
-    <div class="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-light opacity-10">
-        <div class="absolute inset-0">
-            <div class="absolute h-[40rem] w-[40rem] -top-40 -left-40 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-            <div class="absolute h-[30rem] w-[30rem] top-40 right-20 bg-accent-light rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
-        </div>
+    <div class="absolute inset-0">
+        <div class="absolute h-[40rem] w-[40rem] -top-40 -left-40 bg-gold-light/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+        <div class="absolute h-[30rem] w-[30rem] top-40 right-20 bg-gold-dark/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
     </div>
 
     <!-- Hero Content -->
@@ -19,35 +17,35 @@
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div class="space-y-8">
                 <h1 class="text-5xl md:text-7xl font-display font-bold leading-tight">
-                    <span class="text-gray-900 dark:text-white">Creative</span>
-                    <span class="gradient-text">Developer</span>
-                    <span class="text-gray-900 dark:text-white">Portfolio</span>
+                    <span class="text-gold-light">Creative</span>
+                    <span class="gold-text">Developer</span>
+                    <span class="text-gold-light">Portfolio</span>
                 </h1>
-                <p class="text-xl text-gray-600 dark:text-gray-300 font-light max-w-lg">
+                <p class="text-xl text-gold-light/80 font-light max-w-lg">
                     Crafting digital experiences through innovative design and cutting-edge development.
                 </p>
                 <div class="flex space-x-4">
-                    <a href="#projects" class="group px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-light rounded-full text-white font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 flex items-center">
+                    <a href="#projects" class="group px-8 py-4 bg-gold-light text-black rounded-full font-medium transition-all duration-300 hover:bg-gold-dark hover:shadow-lg hover:shadow-gold-light/20 hover:scale-105 flex items-center">
                         View Projects
                         <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </a>
-                    <a href="{% url 'blog_list' %}" class="px-8 py-4 modern-card text-gray-900 dark:text-white rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:scale-105">
+                    <a href="{% url 'blog_list' %}" class="px-8 py-4 glass-effect text-gold-light rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-gold-light/20 hover:scale-105">
                         Read Blog
                     </a>
                 </div>
             </div>
             
-            <!-- Modern Floating Cards Display -->
+            <!-- Floating Cards Display -->
             <div class="hidden lg:block relative">
                 <div class="grid grid-cols-2 gap-4 animate-float">
                     {% for project in random_projects|slice:":2" %}
-                        <div class="modern-card p-6 transform hover:scale-105 transition-all duration-300 {% if forloop.last %}mt-8{% endif %}">
+                        <div class="glass-effect p-6 transform hover:scale-105 transition-all duration-300 {% if forloop.last %}mt-8{% endif %}">
                             {% if project.cover_image %}
                                 <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="rounded-lg mb-4 h-48 w-full object-cover">
                             {% endif %}
-                            <h3 class="font-display font-bold">{{ project.title }}</h3>
+                            <h3 class="font-display font-bold text-gold-light">{{ project.title }}</h3>
                         </div>
                     {% endfor %}
                 </div>
@@ -57,26 +55,26 @@
 </div>
 
 <!-- Featured Projects Section -->
-<div id="projects" class="relative py-24 bg-neutral-50 dark:bg-neutral-900">
+<div id="projects" class="relative py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-display font-bold gradient-text mb-4">Featured Projects</h2>
-            <p class="text-gray-600 dark:text-gray-400 text-xl">Showcasing my best work and creative solutions</p>
+            <h2 class="text-4xl md:text-5xl font-display font-bold gold-text mb-4">Featured Projects</h2>
+            <p class="text-gold-light/80 text-xl">Showcasing my best work and creative solutions</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for project in projects %}
-            <div class="group modern-card hover:shadow-2xl dark:bg-neutral-800">
+            <div class="group glass-effect hover:shadow-xl hover:shadow-gold-light/20">
                 <div class="relative overflow-hidden rounded-t-xl">
                     <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" 
                          class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <div class="p-8">
-                    <h3 class="text-2xl font-display font-bold mb-3 text-gray-900 dark:text-white">{{ project.title }}</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-6">{{ project.description|truncatewords:20 }}</p>
+                    <h3 class="text-2xl font-display font-bold mb-3 text-gold-light">{{ project.title }}</h3>
+                    <p class="text-gold-light/80 mb-6">{{ project.description|truncatewords:20 }}</p>
                     <a href="{% url 'project_detail' project.id %}" 
-                       class="inline-flex items-center text-primary-600 dark:text-primary-400 font-medium group-hover:text-accent-light transition-colors duration-300">
+                       class="inline-flex items-center text-gold-light font-medium hover:text-gold-dark transition-colors duration-300">
                         View Project
                         <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -86,7 +84,7 @@
             </div>
             {% empty %}
                 <div class="col-span-full text-center py-12">
-                    <p class="text-xl text-gray-600 dark:text-gray-400">No projects available at the moment. Check back soon!</p>
+                    <p class="text-xl text-gold-light/80">No projects available at the moment. Check back soon!</p>
                 </div>
             {% endfor %}
         </div>
@@ -94,24 +92,19 @@
 </div>
 
 <!-- Call to Action Section -->
-<!-- Updated CTA Section -->
 <div class="relative py-24">
-    <div class="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-light opacity-10"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="modern-card p-12 relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary-500 rounded-full opacity-10 blur-2xl"></div>
-            <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-accent-light rounded-full opacity-10 blur-2xl"></div>
-            
+        <div class="glass-effect p-12 relative overflow-hidden">
             <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
                 <div class="flex-1">
-                    <h2 class="text-4xl font-display font-bold gradient-text mb-4">Ready to Start Your Project?</h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-300">Let's create something amazing together.</p>
+                    <h2 class="text-4xl font-display font-bold gold-text mb-4">Ready to Start Your Project?</h2>
+                    <p class="text-lg text-gold-light/80">Let's create something amazing together.</p>
                 </div>
                 <div class="flex gap-4">
-                    <a href="#contact" class="px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-light text-white rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                    <a href="#contact" class="px-8 py-4 bg-gold-light text-black rounded-full font-medium hover:bg-gold-dark hover:shadow-lg hover:shadow-gold-light/20 transform hover:scale-105 transition-all duration-300">
                         Get Started
                     </a>
-                    <a href="{% url 'resume:resume' %}" class="px-8 py-4 modern-card text-gray-900 dark:text-white rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                    <a href="{% url 'resume:resume' %}" class="px-8 py-4 glass-effect text-gold-light rounded-full font-medium hover:shadow-lg hover:shadow-gold-light/20 transform hover:scale-105 transition-all duration-300">
                         View Resume
                     </a>
                 </div>
@@ -120,24 +113,19 @@
     </div>
 </div>
 
-
-<!-- Newsletter Section with Glass Morphism -->
+<!-- Newsletter Section -->
 <div class="relative py-24">
-    <div class="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-light opacity-10 dark:opacity-20"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="modern-card backdrop-blur-xl p-12 relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-accent-light rounded-full opacity-10 blur-2xl"></div>
-            <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-primary-500 rounded-full opacity-10 blur-2xl"></div>
-            
+        <div class="glass-effect p-12 relative overflow-hidden">
             <div class="relative text-center max-w-2xl mx-auto">
-                <h2 class="text-4xl font-display font-bold mb-6 gradient-text">Stay Updated</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">Get the latest updates on new projects, articles, and exclusive resources.</p>
+                <h2 class="text-4xl font-display font-bold mb-6 gold-text">Stay Updated</h2>
+                <p class="text-lg text-gold-light/80 mb-8">Get the latest updates on new projects, articles, and exclusive resources.</p>
                 
                 <form class="flex flex-col sm:flex-row gap-4">
                     <input type="email" placeholder="Enter your email" 
-                           class="flex-1 px-6 py-4 rounded-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300">
+                           class="flex-1 px-6 py-4 rounded-full bg-black border border-gold-light/20 text-gold-light focus:border-gold-light focus:ring-2 focus:ring-gold-light focus:ring-opacity-50 transition-all duration-300">
                     <button type="submit" 
-                            class="px-8 py-4 rounded-full bg-gradient-to-r from-primary-600 to-accent-dark text-white font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                            class="px-8 py-4 rounded-full bg-gold-light text-black font-medium hover:bg-gold-dark hover:shadow-lg hover:shadow-gold-light/20 transform hover:scale-105 transition-all duration-300">
                         Subscribe
                     </button>
                 </form>
@@ -146,135 +134,36 @@
     </div>
 </div>
 
-<!-- Community Section -->
-<div class="relative py-24 bg-neutral-50 dark:bg-neutral-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-display font-bold gradient-text mb-4">Join Our Community</h2>
-            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Connect with creative minds, share ideas, and grow together in our vibrant community.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Network Card -->
-            <div class="modern-card p-8 relative group hover:shadow-2xl">
-                <div class="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-light opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-xl"></div>
-                <div class="relative">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-3 mb-6">
-                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-display font-bold mb-4">Network</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Connect with professionals and expand your creative network globally.</p>
-                </div>
-            </div>
-
-            <!-- Collaboration Card -->
-            <div class="modern-card p-8 relative group hover:shadow-2xl">
-                <div class="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-light opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-xl"></div>
-                <div class="relative">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-3 mb-6">
-                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-display font-bold mb-4">Collaborate</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Work together on exciting projects and create innovative solutions.</p>
-                </div>
-            </div>
-
-            <!-- Resources Card -->
-            <div class="modern-card p-8 relative group hover:shadow-2xl">
-                <div class="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-light opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-xl"></div>
-                <div class="relative">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-accent-light p-3 mb-6">
-                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-display font-bold mb-4">Resources</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Access premium tools, tutorials, and resources to enhance your skills.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-16 text-center">
-            <a href="#" class="inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-primary-600 to-accent-dark text-white font-medium group hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                Join Now
-                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                </svg>
-            </a>
-        </div>
-    </div>
-</div>
-
-
-<script>
-    // Add animations
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const animateOnScroll = (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in-up');
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(animateOnScroll, {
-            root: null,
-            threshold: 0.1
-        });
-
-        document.querySelectorAll('.grid > div, .flow-root, form, h2, p, .inline-flex').forEach(el => {
-            el.classList.add('opacity-0');
-            observer.observe(el);
-        });
-    });
-</script>
-
 <style>
-    @keyframes fadeInUp {
-        
-        from {
-            opacity: 0;
-            transform: translate3d(0, 40px, 0);
-        }
+    .glass-effect {
+        background: rgba(0, 0, 0, 0.8);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        transition: all 0.3s ease;
+    }
+
+    .gold-text {
+        background: linear-gradient(135deg, #ffd700, #b8860b);
+        -webkit-background-clip: text;
+        color: transparent;
+        background-size: 200% auto;
+        animation: shine 3s linear infinite;
+    }
+
+    @keyframes shine {
         to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
+            background-position: 200% center;
         }
     }
 
-    .animate-fade-in-up {
-        animation: fadeInUp 0.6s ease-out forwards;
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
     }
 
-    .modern-card {
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 24px;
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
-
-.dark .modern-card {
-    background: rgba(17, 24, 39, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.gradient-text {
-    background: linear-gradient(135deg, #0ea5e9, #db2777);
-    -webkit-background-clip: text;
-    color: transparent;
-    background-size: 200% 200%;
-    animation: gradient 8s ease infinite;
-}
-
-@keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+    .animate-float {
+        animation: float 3s ease-in-out infinite;
+    }
 </style>
 {% endblock %}
